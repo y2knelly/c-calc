@@ -4,26 +4,30 @@
 void test();
 
 signed char subtract(signed char a, signed char b) {
-  /*
-   * Returns the result of `a - b` This function may only use the following
-   * operators:
-   *
-   * - Addition `+`
-   * - Bitwise complement `~`
-   */
+  // Using the fact that a - b is equivalent to a + (~b + 1)
+  return a + (~b + 1);
 
   return 0;
 }
 
 int get_result(int operand1, char operator, int operand2) {
-  /**
-  Returns the result of an operation
-
-  operand1 and operand2 are integers
-  operator is a char that can be one of (+,-,*,/)
-
-  Exits the program with status code 1 in the case of an invalid operation.
-  */
+  switch (operator) {
+    case '+':
+      return operand1 + operand2;
+    case '-':
+      return subtract(operand1, operand2);
+    case '*':
+      return operand1 * operand2;
+    case '/':
+      if (operand2 == 0) {
+        fprintf(stderr, "Division by zero error\n");
+        exit(1);
+      }
+      return operand1 / operand2;
+    default:
+      fprintf(stderr, "Invalid operator\n");
+      exit(1);
+  }
 
   return 0;
 }
